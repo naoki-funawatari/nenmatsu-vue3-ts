@@ -149,179 +149,265 @@ function calc() {
 
 <template>
   <main role="main" class="container">
-    <div id="nenmatsu" class="main">
-      <div class="sub">
-        <h3>生命保険料控除</h3>
-        <table class="table table-hover table-relative">
-          <thead class="thead-dark">
-            <tr>
-              <th>#</th>
-              <th colspan="6" class="cursorh" data-toggle="tooltip" data-placement="top" title="新・旧の区分">区分
-              </th>
-              <th colspan="6" class="cursorh" data-toggle="tooltip" data-placement="top"
-                title="あなたが本年中に支払った保険料等の金額(分配を受けた剰余金等の控除後の金額)">保険料(a)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- 一般の生命保険料 -->
-            <tr v-for="(item, label, idx) in seimei">
-              <th v-if="idx === 0" v-bind:rowspan="seimeiIsShow ? Object.keys(seimei).length : 1"
-                v-on:click="seimeiIsShow = !seimeiIsShow" class="hokenname align-middle">
-                {{ seimeiIsShow ? '－' : '＋' }}　一般の生命保険料
-              </th>
-              <td colspan="6" v-if="seimeiIsShow || idx === 0">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label v-bind:class="'btn btn-outline-secondary' + (item.kubun === 0 ? ' active' : '')"
-                    v-on:click="item.kubun = 0">
-                    <input type="radio" value="0" autocomplete="off" />新
-                  </label>
-                  <label v-bind:class="'btn btn-outline-secondary' + (item.kubun === 1 ? ' active' : '')"
-                    v-on:click="item.kubun = 1">
-                    <input type="radio" value="1" autocomplete="off" />旧
-                  </label>
-                </div>
-              </td>
-              <td colspan="6" v-if="seimeiIsShow || idx === 0">
-                <input type="tel" size="10" class="form-control" v-model="item.kingaku"
-                  v-on:keyup="item.kingaku = no(item.kingaku)" />
-              </td>
-            </tr>
-            <tr>
-              <td>新保険料合計</td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top" title="(a)のうち新保険料等の金額の合計額">A
-              </td>
-              <td colspan="2"><span>{{ seimeiAsum }}円</span></td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top"
-                title="Aの金額を計算式Ⅰ(新保険料等用)に当てはめて計算した金額">①</td>
-              <td colspan="2"><span>{{ seimeiAformula }}円</span></td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top" title="計（①＋②）">③
-              </td>
-              <td colspan="2"><span>{{ seimeiTotal }}円</span></td>
-            </tr>
-            <tr>
-              <td>旧保険料合計</td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top" title="(a)のうち旧保険料等の金額の合計額">B
-              </td>
-              <td colspan="2"><span>{{ seimeiBsum }}円</span></td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top"
-                title="Bの金額を計算式Ⅱ(旧保険料等用)に当てはめて計算した金額">②</td>
-              <td colspan="2"><span>{{ seimeiBformula }}円</span></td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top" title="②と③のいずれか大きい金額">イ</td>
-              <td colspan="2"><span>{{ seimeiAnswer }}円</span></td>
-            </tr>
-            <!-- 介護医療保険料 -->
-            <tr v-for="(item, label, idx) in kaigo">
-              <th v-if="idx === 0" v-bind:rowspan="kaigoIsShow ? Object.keys(kaigo).length : 1"
-                v-on:click="kaigoIsShow = !kaigoIsShow" class="hokenname align-middle">
-                {{ kaigoIsShow ? '－' : '＋' }}　介護医療保険料
-              </th>
-              <td colspan="6" v-if="kaigoIsShow || idx === 0"></td>
-              <td colspan="6" v-if="kaigoIsShow || idx === 0">
-                <input type="tel" size="10" class="form-control" v-model="item.kingaku"
-                  v-on:keyup="item.kingaku = no(item.kingaku)" />
-              </td>
-            </tr>
-            <tr>
-              <td>保険料合計</td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top" title="(a)の金額の合計額">C</td>
-              <td colspan="2"><span>{{ kaigoCsum }}円</span></td>
-              <td colspan="2"></td>
-              <td colspan="2"></td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top"
-                title="Cの金額を計算式Ⅰ(新保険料等用)に当てはめて計算した金額">ロ</td>
-              <td colspan="2"><span>{{ kaigoAnswer }}円</span></td>
-            </tr>
-            <!-- 個人年金保険料 -->
-            <tr v-for="(item, label, idx) in nenkin">
-              <th v-if="idx === 0" v-bind:rowspan="nenkinIsShow ? Object.keys(nenkin).length : 1"
-                v-on:click="nenkinIsShow = !nenkinIsShow" class="hokenname align-middle">
-                {{ nenkinIsShow ? '－' : '＋' }}　個人年金保険料
-              </th>
-              <td colspan="6" v-if="nenkinIsShow || idx === 0">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label v-bind:class="'btn btn-outline-secondary' + (item.kubun === 0 ? ' active' : '')"
-                    v-on:click="item.kubun = 0">
-                    <input type="radio" value="0" autocomplete="off" />新
-                  </label>
-                  <label v-bind:class="'btn btn-outline-secondary' + (item.kubun === 1 ? ' active' : '')"
-                    v-on:click="item.kubun = 1">
-                    <input type="radio" value="1" autocomplete="off" />旧
-                  </label>
-                </div>
-              </td>
-              <td colspan="6" v-if="nenkinIsShow || idx === 0">
-                <input type="tel" size="10" class="form-control" v-model="item.kingaku"
-                  v-on:keyup="item.kingaku = no(item.kingaku)" />
-              </td>
-            </tr>
-            <tr>
-              <td>新保険料合計</td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top" title="(a)のうち新保険料等の金額の合計額">D
-              </td>
-              <td colspan="2"><span>{{ nenkinDsum }}円</span></td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top"
-                title="Dの金額を計算式Ⅰ(新保険料等用)に当てはめて計算した金額">④</td>
-              <td colspan="2"><span>{{ nenkinDformula }}円</span></td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top" title="計（④＋⑤）">⑥
-              </td>
-              <td colspan="2"><span>{{ nenkinTotal }}円</span></td>
-            </tr>
-            <tr>
-              <td>旧保険料合計</td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top" title="(a)のうち旧保険料等の金額の合計額">E
-              </td>
-              <td colspan="2"><span>{{ nenkinEsum }}円</span></td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top"
-                title="Eの金額を計算式Ⅱ(旧保険料等用)に当てはめて計算した金額">⑤</td>
-              <td colspan="2"><span>{{ nenkinEformula }}円</span></td>
-              <td colspan="2" class="cursorh" data-toggle="tooltip" data-placement="top" title="⑤と⑥のいずれか大きい金額">ハ</td>
-              <td colspan="2"><span>{{ nenkinAnswer }}円</span></td>
-            </tr>
-            <tr>
-              <th class="cursorh" data-toggle="tooltip" data-placement="top"
-                title="生命保険料控除額計(イ＋ロ＋ハ)&#13;&#10;最高120,000円">生命保険料控除額</th>
-              <td colspan="11"></td>
-              <td>
-                <span>{{ koujo }}円</span>
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="13">
-                <button type="button" class="btn btn-outline-secondary btn-lg btn-block" v-on:click="calc">計算する</button>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-    </div>
+    <h1 class="title">生命保険料控除</h1>
+    <v-table>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="table-header-cell">#</th>
+            <th colspan="6" class="cursorh table-header-cell">
+              <span>区分</span>
+              <v-tooltip activator="parent" location="top">
+                新・旧の区分
+              </v-tooltip>
+            </th>
+            <th colspan="6" class="cursorh table-header-cell">
+              <span>保険料(a)</span>
+              <v-tooltip activator="parent" location="top">
+                あなたが本年中に支払った保険料等の金額(分配を受けた剰余金等の控除後の金額)
+              </v-tooltip>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 一般の生命保険料 -->
+          <tr v-for="(item, label, idx) in seimei">
+            <th v-if="idx === 0" v-bind:rowspan="seimeiIsShow ? Object.keys(seimei).length : 1"
+              v-on:click="seimeiIsShow = !seimeiIsShow" class="hokenname">
+              {{ seimeiIsShow ? '－' : '＋' }}　一般の生命保険料
+            </th>
+            <td colspan="6" v-if="seimeiIsShow || idx === 0">
+              <v-card flat>
+                <v-card-text :class="'v-card-text'">
+                  <v-row :align="'center'" justify="center">
+                    <v-btn-toggle v-model="item.kubun" mandatory>
+                      <v-btn :active="(item.kubun == 0)" v-on:click="item.kubun = 0">
+                        新
+                      </v-btn>
+                      <v-btn :active="(item.kubun == 1)" v-on:click="item.kubun = 1">
+                        旧
+                      </v-btn>
+                    </v-btn-toggle>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </td>
+            <td colspan="6" v-if="seimeiIsShow || idx === 0" class="text-right">
+              <v-text-field solo type="tel" size="10" v-model="item.kingaku"
+                v-on:keyup="item.kingaku = no(item.kingaku)" hide-details></v-text-field>
+            </td>
+          </tr>
+          <tr>
+            <td>新保険料合計</td>
+            <td colspan="2" class="cursorh">
+              <span>A</span>
+              <v-tooltip activator="parent" location="top">
+                (a)のうち新保険料等の金額の合計額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ seimeiAsum }}円</span></td>
+            <td colspan="2" class="cursorh">
+              <span>①</span>
+              <v-tooltip activator="parent" location="top">
+                Aの金額を計算式Ⅰ(新保険料等用)に当てはめて計算した金額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ seimeiAformula }}円</span></td>
+            <td colspan="2" class="cursorh">
+              <span>③</span>
+              <v-tooltip activator="parent" location="top">
+                計（①＋②）
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ seimeiTotal }}円</span></td>
+          </tr>
+          <tr>
+            <td>旧保険料合計</td>
+            <td colspan="2" class="cursorh">
+              <span>B</span>
+              <v-tooltip activator="parent" location="top">
+                (a)のうち旧保険料等の金額の合計額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ seimeiBsum }}円</span></td>
+            <td colspan="2" class="cursorh">
+              <span>②</span>
+              <v-tooltip activator="parent" location="top">
+                Bの金額を計算式Ⅱ(旧保険料等用)に当てはめて計算した金額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ seimeiBformula }}円</span></td>
+            <td colspan="2" class="cursorh">
+              <span>イ</span>
+              <v-tooltip activator="parent" location="top">
+                ②と③のいずれか大きい金額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ seimeiAnswer }}円</span></td>
+          </tr>
+          <!-- 介護医療保険料 -->
+          <tr v-for="(item, label, idx) in kaigo">
+            <th v-if="idx === 0" v-bind:rowspan="kaigoIsShow ? Object.keys(kaigo).length : 1"
+              v-on:click="kaigoIsShow = !kaigoIsShow" class="hokenname">
+              {{ kaigoIsShow ? '－' : '＋' }}　介護医療保険料
+            </th>
+            <td colspan="6" v-if="kaigoIsShow || idx === 0"></td>
+            <td colspan="6" v-if="kaigoIsShow || idx === 0">
+              <v-text-field solo type="tel" size="10" v-model="item.kingaku"
+                v-on:keyup="item.kingaku = no(item.kingaku)" hide-details></v-text-field>
+            </td>
+          </tr>
+          <tr>
+            <td>保険料合計</td>
+            <td colspan="2" class="cursorh">
+              <span>C</span>
+              <v-tooltip activator="parent" location="top">
+                (a)の金額の合計額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ kaigoCsum }}円</span></td>
+            <td colspan="2"></td>
+            <td colspan="2"></td>
+            <td colspan="2" class="cursorh">
+              <span>ロ</span>
+              <v-tooltip activator="parent" location="top">
+                Cの金額を計算式Ⅰ(新保険料等用)に当てはめて計算した金額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ kaigoAnswer }}円</span></td>
+          </tr>
+          <!-- 個人年金保険料 -->
+          <tr v-for="(item, label, idx) in nenkin">
+            <th v-if="idx === 0" v-bind:rowspan="nenkinIsShow ? Object.keys(nenkin).length : 1"
+              v-on:click="nenkinIsShow = !nenkinIsShow" class="hokenname">
+              {{ nenkinIsShow ? '－' : '＋' }}　個人年金保険料
+            </th>
+            <td colspan="6" v-if="nenkinIsShow || idx === 0">
+              <v-card flat>
+                <v-card-text :class="'v-card-text'">
+                  <v-row :align="'center'" justify="center">
+                    <v-btn-toggle v-model="item.kubun" mandatory>
+                      <v-btn :active="(item.kubun == 0)" v-on:click="item.kubun = 0">
+                        新
+                      </v-btn>
+                      <v-btn :active="(item.kubun == 1)" v-on:click="item.kubun = 1">
+                        旧
+                      </v-btn>
+                    </v-btn-toggle>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </td>
+            <td colspan="6" v-if="nenkinIsShow || idx === 0">
+              <v-text-field solo type="tel" size="10" v-model="item.kingaku"
+                v-on:keyup="item.kingaku = no(item.kingaku)" hide-details></v-text-field>
+            </td>
+          </tr>
+          <tr>
+            <td>新保険料合計</td>
+            <td colspan="2" class="cursorh">
+              <span>D</span>
+              <v-tooltip activator="parent" location="top">
+                (a)のうち新保険料等の金額の合計額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ nenkinDsum }}円</span></td>
+            <td colspan="2" class="cursorh">
+              <span>④</span>
+              <v-tooltip activator="parent" location="top">
+                Dの金額を計算式Ⅰ(新保険料等用)に当てはめて計算した金額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ nenkinDformula }}円</span></td>
+            <td colspan="2" class="cursorh">
+              <span>⑥</span>
+              <v-tooltip activator="parent" location="top">
+                計（④＋⑤）
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ nenkinTotal }}円</span></td>
+          </tr>
+          <tr>
+            <td>旧保険料合計</td>
+            <td colspan="2" class="cursorh">
+              <span>E</span>
+              <v-tooltip activator="parent" location="top">
+                (a)のうち旧保険料等の金額の合計額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ nenkinEsum }}円</span></td>
+            <td colspan="2" class="cursorh">
+              <span>⑤</span>
+              <v-tooltip activator="parent" location="top">
+                Eの金額を計算式Ⅱ(旧保険料等用)に当てはめて計算した金額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ nenkinEformula }}円</span></td>
+            <td colspan="2" class="cursorh">
+              <span>ハ</span>
+              <v-tooltip activator="parent" location="top">
+                ⑤と⑥のいずれか大きい金額
+              </v-tooltip>
+            </td>
+            <td colspan="2"><span>{{ nenkinAnswer }}円</span></td>
+          </tr>
+          <tr>
+            <th class="cursorh">
+              <span>生命保険料控除額</span>
+              <v-tooltip activator="parent" location="top">
+                生命保険料控除額計(イ＋ロ＋ハ)&#13;&#10;最高120,000円
+              </v-tooltip>
+            </th>
+            <td colspan="11"></td>
+            <td>
+              <span>{{ koujo }}円</span>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="13" class="px-0">
+              <div class="d-flex flex-column">
+                <v-btn v-on:click="calc" variant="outlined" color="secondary">
+                  計算する
+                </v-btn>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </template>
+    </v-table>
   </main>
 </template>
 
-<style scoped lang="css">
-.main {
+<style scoped lang="scss">
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  >.title,
+  >.v-table {
+    width: 650px;
+  }
+}
+
+.title {
   text-align: center;
 }
 
-.sub {
-  display: inline-block;
-}
-
-.table {
-  width: 650px;
-}
-
-input[type=tel] {
-  text-align: right;
+.table-header-cell {
+  color: #fff;
+  background-color: #212529;
 }
 
 .cursorh {
   cursor: help;
 }
 
-.hokenname {
-  cursor: pointer;
-  text-align: left;
+:deep(input) {
+  &[type="tel"] {
+    text-align: right;
+  }
 }
 </style>
