@@ -32,13 +32,15 @@ Bootstrap 臭のプンプンに漂った UI。
 - Vite
 - Vue3
   - Composition API
+  - Vuetify
+  - Pinia
   - TypeScript
-- JavaScript
-  - jQuery（ツールチップ表示）
-    - あとで消したい
+- ~~JavaScript~~
+  - ~~jQuery（ツールチップ表示）~~
+    - ~~あとで消したい~~
 - CSS
-  - Bootstrap
-    - あとで消したい
+  - ~~Bootstrap~~
+    - ~~あとで消したい~~
 
 # 機能
 
@@ -51,3 +53,5 @@ Bootstrap 臭のプンプンに漂った UI。
 
 - とりあえず Vue3 アプリに置き換える。  
   動けばよいというスタンス。
+- UI コンポーネントとして Vuetify を導入。
+- データ、ロジックを Store に移動。
