@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useNenmatsuStore } from './nenmatsu.store'
+import MyNumberField from '../components/my-number-field.vue'
 const nenmatsuStore = useNenmatsuStore()
 </script>
 
@@ -34,9 +35,9 @@ const nenmatsuStore = useNenmatsuStore()
           </th>
           <td colspan="6" v-if="nenmatsuStore.seimeiIsShow || idx === 0">
             <v-card flat>
-              <v-card-text :class="'v-card-text'">
-                <v-row :align="'center'" justify="center">
-                  <v-btn-toggle v-model="item.kubun" mandatory>
+              <v-card-text>
+                <v-row>
+                  <v-btn-toggle>
                     <v-btn :active="(item.kubun == 0)" v-on:click="item.kubun = 0">
                       新
                     </v-btn>
@@ -48,9 +49,8 @@ const nenmatsuStore = useNenmatsuStore()
               </v-card-text>
             </v-card>
           </td>
-          <td colspan="6" v-if="nenmatsuStore.seimeiIsShow || idx === 0" class="text-right">
-            <v-text-field solo type="tel" size="10" v-model="item.kingaku"
-              v-on:keyup="item.kingaku = nenmatsuStore.no(item.kingaku)" hide-details></v-text-field>
+          <td colspan="6" v-if="nenmatsuStore.seimeiIsShow || idx === 0">
+            <MyNumberField v-model="item.kingaku" />
           </td>
         </tr>
         <tr>
@@ -109,8 +109,7 @@ const nenmatsuStore = useNenmatsuStore()
           </th>
           <td colspan="6" v-if="nenmatsuStore.kaigoIsShow || idx === 0"></td>
           <td colspan="6" v-if="nenmatsuStore.kaigoIsShow || idx === 0">
-            <v-text-field solo type="tel" size="10" v-model="item.kingaku"
-              v-on:keyup="item.kingaku = nenmatsuStore.no(item.kingaku)" hide-details></v-text-field>
+            <MyNumberField v-model="item.kingaku" />
           </td>
         </tr>
         <tr>
@@ -156,8 +155,7 @@ const nenmatsuStore = useNenmatsuStore()
             </v-card>
           </td>
           <td colspan="6" v-if="nenmatsuStore.nenkinIsShow || idx === 0">
-            <v-text-field solo type="tel" size="10" v-model="item.kingaku"
-              v-on:keyup="item.kingaku = nenmatsuStore.no(item.kingaku)" hide-details></v-text-field>
+            <MyNumberField v-model="item.kingaku" />
           </td>
         </tr>
         <tr>
@@ -253,11 +251,5 @@ const nenmatsuStore = useNenmatsuStore()
 
 .cursorh {
   cursor: help;
-}
-
-:deep(input) {
-  &[type="tel"] {
-    text-align: right;
-  }
 }
 </style>

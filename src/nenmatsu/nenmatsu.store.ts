@@ -9,14 +9,14 @@ type Hokenryo = {
 };
 
 export const useNenmatsuStore = defineStore("nenmatsuStore", () => {
-  const seimeiIsShow = ref(false);
+  const seimeiIsShow = ref(true);
   const kaigoIsShow = ref(false);
   const nenkinIsShow = ref(false);
   const seimei = reactive<Hokenryo>({
-    seimei0: { kubun: 0, kingaku: "0" },
-    seimei1: { kubun: 0, kingaku: "0" },
-    seimei2: { kubun: 0, kingaku: "0" },
-    seimei3: { kubun: 0, kingaku: "0" },
+    seimei0: { kubun: 0, kingaku: "35000" },
+    seimei1: { kubun: 1, kingaku: "36000" },
+    seimei2: { kubun: 0, kingaku: "37000" },
+    seimei3: { kubun: 1, kingaku: "38000" },
   });
   const kaigo = reactive<Hokenryo>({
     kaigo0: { kubun: 0, kingaku: "0" },

@@ -4,7 +4,7 @@ import Nenmatsu from './nenmatsu/Nenmatsu.vue'
 
 <template>
   <main role="main" class="container">
-    <nenmatsu />
+    <Nenmatsu />
   </main>
 </template>
 
