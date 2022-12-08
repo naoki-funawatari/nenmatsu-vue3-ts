@@ -9,9 +9,6 @@ type Hokenryo = {
 };
 
 export const useNenmatsuStore = defineStore("nenmatsuStore", () => {
-  const seimeiIsShow = ref(true);
-  const kaigoIsShow = ref(false);
-  const nenkinIsShow = ref(false);
   const seimei = reactive<Hokenryo>({
     seimei0: { kubun: 0, kingaku: "35000" },
     seimei1: { kubun: 1, kingaku: "36000" },
@@ -44,11 +41,6 @@ export const useNenmatsuStore = defineStore("nenmatsuStore", () => {
   const nenkinAnswer = ref("0");
   const koujo = ref("0");
 
-  //数字のみ入力可能
-  function no(val: string) {
-    const kingaku = String(val).replace(/\D/g, "");
-    return kingaku === "" ? "" : `${parseInt(kingaku, 10)}`;
-  }
   //空文字をゼロに変換
   function no2(val: string) {
     const kingaku = String(val).replace(/\D/g, "");
@@ -160,9 +152,6 @@ export const useNenmatsuStore = defineStore("nenmatsuStore", () => {
   }
 
   return {
-    seimeiIsShow,
-    kaigoIsShow,
-    nenkinIsShow,
     seimei,
     kaigo,
     nenkin,
@@ -181,10 +170,6 @@ export const useNenmatsuStore = defineStore("nenmatsuStore", () => {
     nenkinTotal,
     nenkinAnswer,
     koujo,
-    no,
-    no2,
-    formula1,
-    formula2,
     calc,
   };
 });
