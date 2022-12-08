@@ -6,22 +6,22 @@ const nenmatsuStore = useNenmatsuStore()
 
 <template>
   <h1 class="title">生命保険料控除</h1>
-  <v-table>
+  <VTable>
     <template v-slot:default>
       <thead>
         <tr>
           <th class="table-header-cell">#</th>
           <th colspan="6" class="cursorh table-header-cell">
             <span>区分</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               新・旧の区分
-            </v-tooltip>
+            </VTooltip>
           </th>
           <th colspan="6" class="cursorh table-header-cell">
             <span>保険料(a)</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               あなたが本年中に支払った保険料等の金額(分配を受けた剰余金等の控除後の金額)
-            </v-tooltip>
+            </VTooltip>
           </th>
         </tr>
       </thead>
@@ -34,20 +34,20 @@ const nenmatsuStore = useNenmatsuStore()
             {{ nenmatsuStore.seimeiIsShow ? '－' : '＋' }}　一般の生命保険料
           </th>
           <td colspan="6" v-if="nenmatsuStore.seimeiIsShow || idx === 0">
-            <v-card flat>
-              <v-card-text>
-                <v-row>
-                  <v-btn-toggle>
-                    <v-btn :active="(item.kubun == 0)" v-on:click="item.kubun = 0">
+            <VCard flat>
+              <VCardText>
+                <VRow>
+                  <VBtnToggle>
+                    <VBtn :active="(item.kubun == 0)" v-on:click="item.kubun = 0">
                       新
-                    </v-btn>
-                    <v-btn :active="(item.kubun == 1)" v-on:click="item.kubun = 1">
+                    </VBtn>
+                    <VBtn :active="(item.kubun == 1)" v-on:click="item.kubun = 1">
                       旧
-                    </v-btn>
-                  </v-btn-toggle>
-                </v-row>
-              </v-card-text>
-            </v-card>
+                    </VBtn>
+                  </VBtnToggle>
+                </VRow>
+              </VCardText>
+            </VCard>
           </td>
           <td colspan="6" v-if="nenmatsuStore.seimeiIsShow || idx === 0">
             <MyNumberField v-model="item.kingaku" />
@@ -57,23 +57,23 @@ const nenmatsuStore = useNenmatsuStore()
           <td>新保険料合計</td>
           <td colspan="2" class="cursorh">
             <span>A</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               (a)のうち新保険料等の金額の合計額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.seimeiAsum }}円</span></td>
           <td colspan="2" class="cursorh">
             <span>①</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               Aの金額を計算式Ⅰ(新保険料等用)に当てはめて計算した金額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.seimeiAformula }}円</span></td>
           <td colspan="2" class="cursorh">
             <span>③</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               計（①＋②）
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.seimeiTotal }}円</span></td>
         </tr>
@@ -81,23 +81,23 @@ const nenmatsuStore = useNenmatsuStore()
           <td>旧保険料合計</td>
           <td colspan="2" class="cursorh">
             <span>B</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               (a)のうち旧保険料等の金額の合計額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.seimeiBsum }}円</span></td>
           <td colspan="2" class="cursorh">
             <span>②</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               Bの金額を計算式Ⅱ(旧保険料等用)に当てはめて計算した金額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.seimeiBformula }}円</span></td>
           <td colspan="2" class="cursorh">
             <span>イ</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               ②と③のいずれか大きい金額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.seimeiAnswer }}円</span></td>
         </tr>
@@ -116,18 +116,18 @@ const nenmatsuStore = useNenmatsuStore()
           <td>保険料合計</td>
           <td colspan="2" class="cursorh">
             <span>C</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               (a)の金額の合計額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.kaigoCsum }}円</span></td>
           <td colspan="2"></td>
           <td colspan="2"></td>
           <td colspan="2" class="cursorh">
             <span>ロ</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               Cの金額を計算式Ⅰ(新保険料等用)に当てはめて計算した金額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.kaigoAnswer }}円</span></td>
         </tr>
@@ -139,20 +139,20 @@ const nenmatsuStore = useNenmatsuStore()
             {{ nenmatsuStore.nenkinIsShow ? '－' : '＋' }}　個人年金保険料
           </th>
           <td colspan="6" v-if="nenmatsuStore.nenkinIsShow || idx === 0">
-            <v-card flat>
-              <v-card-text :class="'v-card-text'">
-                <v-row :align="'center'" justify="center">
-                  <v-btn-toggle v-model="item.kubun" mandatory>
-                    <v-btn :active="(item.kubun == 0)" v-on:click="item.kubun = 0">
+            <VCard flat>
+              <VCardText :class="'v-card-text'">
+                <VRow :align="'center'" justify="center">
+                  <VBtnToggle v-model="item.kubun" mandatory>
+                    <VBtn :active="(item.kubun == 0)" v-on:click="item.kubun = 0">
                       新
-                    </v-btn>
-                    <v-btn :active="(item.kubun == 1)" v-on:click="item.kubun = 1">
+                    </VBtn>
+                    <VBtn :active="(item.kubun == 1)" v-on:click="item.kubun = 1">
                       旧
-                    </v-btn>
-                  </v-btn-toggle>
-                </v-row>
-              </v-card-text>
-            </v-card>
+                    </VBtn>
+                  </VBtnToggle>
+                </VRow>
+              </VCardText>
+            </VCard>
           </td>
           <td colspan="6" v-if="nenmatsuStore.nenkinIsShow || idx === 0">
             <MyNumberField v-model="item.kingaku" />
@@ -162,23 +162,23 @@ const nenmatsuStore = useNenmatsuStore()
           <td>新保険料合計</td>
           <td colspan="2" class="cursorh">
             <span>D</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               (a)のうち新保険料等の金額の合計額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.nenkinDsum }}円</span></td>
           <td colspan="2" class="cursorh">
             <span>④</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               Dの金額を計算式Ⅰ(新保険料等用)に当てはめて計算した金額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.nenkinDformula }}円</span></td>
           <td colspan="2" class="cursorh">
             <span>⑥</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               計（④＋⑤）
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.nenkinTotal }}円</span></td>
         </tr>
@@ -186,32 +186,32 @@ const nenmatsuStore = useNenmatsuStore()
           <td>旧保険料合計</td>
           <td colspan="2" class="cursorh">
             <span>E</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               (a)のうち旧保険料等の金額の合計額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.nenkinEsum }}円</span></td>
           <td colspan="2" class="cursorh">
             <span>⑤</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               Eの金額を計算式Ⅱ(旧保険料等用)に当てはめて計算した金額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.nenkinEformula }}円</span></td>
           <td colspan="2" class="cursorh">
             <span>ハ</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               ⑤と⑥のいずれか大きい金額
-            </v-tooltip>
+            </VTooltip>
           </td>
           <td colspan="2"><span>{{ nenmatsuStore.nenkinAnswer }}円</span></td>
         </tr>
         <tr>
           <th class="cursorh">
             <span>生命保険料控除額</span>
-            <v-tooltip activator="parent" location="top">
+            <VTooltip activator="parent" location="top">
               生命保険料控除額計(イ＋ロ＋ハ)&#13;&#10;最高120,000円
-            </v-tooltip>
+            </VTooltip>
           </th>
           <td colspan="11"></td>
           <td>
@@ -223,15 +223,15 @@ const nenmatsuStore = useNenmatsuStore()
         <tr>
           <td colspan="13" class="px-0">
             <div class="d-flex flex-column">
-              <v-btn v-on:click="nenmatsuStore.calc" variant="outlined" color="secondary">
+              <VBtn v-on:click="nenmatsuStore.calc" variant="outlined" color="secondary">
                 計算する
-              </v-btn>
+              </VBtn>
             </div>
           </td>
         </tr>
       </tfoot>
     </template>
-  </v-table>
+  </VTable>
 </template>
 
 <style scoped lang="scss">

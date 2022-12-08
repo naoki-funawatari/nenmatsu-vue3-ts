@@ -9,7 +9,7 @@ type Emits = {
 defineProps<Props>()
 const emits = defineEmits<Emits>()
 const onUpdate = (value: string) => emits('update:modelValue', value)
-const numberOnly = [(value: string) => (!value || /^\d+$/.test(value)) || 'only number']
+const numberOnly = [(value: string) => (!value || /^\d+$/.test(value)) || 'number only']
 </script>
 
 <template>
