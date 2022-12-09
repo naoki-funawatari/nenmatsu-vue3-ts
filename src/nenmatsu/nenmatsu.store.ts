@@ -1,30 +1,35 @@
 import { reactive, ref } from "vue";
 import { defineStore } from "pinia";
 
-type Hokenryo = {
-  [key: string]: {
-    kubun: number;
-    kingaku: string;
-  };
-};
+class Hokenryo {
+  public kubun: number;
+  public kingaku: string;
+
+  constructor(kubun: number, kingaku: string) {
+    this.kubun = kubun;
+    this.kingaku = kingaku;
+  }
+}
 
 export const useNenmatsuStore = defineStore("nenmatsuStore", () => {
-  const seimei = reactive<Hokenryo>({
-    seimei0: { kubun: 0, kingaku: "35000" },
-    seimei1: { kubun: 1, kingaku: "36000" },
-    seimei2: { kubun: 0, kingaku: "37000" },
-    seimei3: { kubun: 1, kingaku: "38000" },
-  });
-  const kaigo = reactive<Hokenryo>({
-    kaigo0: { kubun: 0, kingaku: "0" },
-    kaigo1: { kubun: 0, kingaku: "0" },
-  });
-  const nenkin = reactive<Hokenryo>({
-    nenkin0: { kubun: 0, kingaku: "0" },
-    nenkin1: { kubun: 0, kingaku: "0" },
-    nenkin2: { kubun: 0, kingaku: "0" },
-    nenkin3: { kubun: 0, kingaku: "0" },
-  });
+  // data
+  const seimei = reactive<Hokenryo[]>([
+    { kubun: 0, kingaku: "35000" },
+    { kubun: 1, kingaku: "36000" },
+    { kubun: 0, kingaku: "37000" },
+    { kubun: 1, kingaku: "38000" },
+  ]);
+  const kaigo = reactive<Hokenryo[]>([
+    { kubun: 0, kingaku: "0" },
+    { kubun: 0, kingaku: "0" },
+  ]);
+  const nenkin = reactive<Hokenryo[]>([
+    { kubun: 0, kingaku: "0" },
+    { kubun: 0, kingaku: "0" },
+    { kubun: 0, kingaku: "0" },
+    { kubun: 0, kingaku: "0" },
+  ]);
+
   const seimeiAsum = ref("0");
   const seimeiBsum = ref("0");
   const seimeiAformula = ref("0");
@@ -41,6 +46,7 @@ export const useNenmatsuStore = defineStore("nenmatsuStore", () => {
   const nenkinAnswer = ref("0");
   const koujo = ref("0");
 
+  // methods
   //空文字をゼロに変換
   function no2(val: string) {
     const kingaku = String(val).replace(/\D/g, "");

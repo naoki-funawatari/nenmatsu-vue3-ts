@@ -32,12 +32,12 @@ const nenmatsuStore = useNenmatsuStore()
       </thead>
       <tbody>
         <!-- 一般の生命保険料 -->
-        <tr v-for="(item, label, idx) in nenmatsuStore.seimei">
-          <th v-if="idx === 0" v-bind:rowspan="seimeiIsShow ? Object.keys(nenmatsuStore.seimei).length : 1"
+        <tr v-for="(item, index) in nenmatsuStore.seimei">
+          <th v-if="index === 0" v-bind:rowspan="seimeiIsShow ? nenmatsuStore.seimei.length : 1"
             v-on:click="seimeiIsShow = !seimeiIsShow" class="hokenname">
             {{ seimeiIsShow ? '－' : '＋' }}　一般の生命保険料
           </th>
-          <td colspan="6" v-if="seimeiIsShow || idx === 0">
+          <td colspan="6" v-if="seimeiIsShow || index === 0">
             <VCard flat>
               <VCardText>
                 <VRow>
@@ -53,7 +53,7 @@ const nenmatsuStore = useNenmatsuStore()
               </VCardText>
             </VCard>
           </td>
-          <td colspan="6" v-if="seimeiIsShow || idx === 0">
+          <td colspan="6" v-if="seimeiIsShow || index === 0">
             <MyNumberField v-model="item.kingaku" />
           </td>
         </tr>
@@ -106,13 +106,13 @@ const nenmatsuStore = useNenmatsuStore()
           <td colspan="2"><span>{{ nenmatsuStore.seimeiAnswer }}円</span></td>
         </tr>
         <!-- 介護医療保険料 -->
-        <tr v-for="(item, label, idx) in nenmatsuStore.kaigo">
-          <th v-if="idx === 0" v-bind:rowspan="kaigoIsShow ? Object.keys(nenmatsuStore.kaigo).length : 1"
+        <tr v-for="(item, index) in nenmatsuStore.kaigo">
+          <th v-if="index === 0" v-bind:rowspan="kaigoIsShow ? nenmatsuStore.kaigo.length : 1"
             v-on:click="kaigoIsShow = !kaigoIsShow" class="hokenname">
             {{ kaigoIsShow ? '－' : '＋' }}　介護医療保険料
           </th>
-          <td colspan="6" v-if="kaigoIsShow || idx === 0"></td>
-          <td colspan="6" v-if="kaigoIsShow || idx === 0">
+          <td colspan="6" v-if="kaigoIsShow || index === 0"></td>
+          <td colspan="6" v-if="kaigoIsShow || index === 0">
             <MyNumberField v-model="item.kingaku" />
           </td>
         </tr>
@@ -136,12 +136,12 @@ const nenmatsuStore = useNenmatsuStore()
           <td colspan="2"><span>{{ nenmatsuStore.kaigoAnswer }}円</span></td>
         </tr>
         <!-- 個人年金保険料 -->
-        <tr v-for="(item, label, idx) in nenmatsuStore.nenkin">
-          <th v-if="idx === 0" v-bind:rowspan="nenkinIsShow ? Object.keys(nenmatsuStore.nenkin).length : 1"
+        <tr v-for="(item, index) in nenmatsuStore.nenkin">
+          <th v-if="index === 0" v-bind:rowspan="nenkinIsShow ? nenmatsuStore.nenkin.length : 1"
             v-on:click="nenkinIsShow = !nenkinIsShow" class="hokenname">
             {{ nenkinIsShow ? '－' : '＋' }}　個人年金保険料
           </th>
-          <td colspan="6" v-if="nenkinIsShow || idx === 0">
+          <td colspan="6" v-if="nenkinIsShow || index === 0">
             <VCard flat>
               <VCardText :class="'v-card-text'">
                 <VRow :align="'center'" justify="center">
@@ -157,7 +157,7 @@ const nenmatsuStore = useNenmatsuStore()
               </VCardText>
             </VCard>
           </td>
-          <td colspan="6" v-if="nenkinIsShow || idx === 0">
+          <td colspan="6" v-if="nenkinIsShow || index === 0">
             <MyNumberField v-model="item.kingaku" />
           </td>
         </tr>
